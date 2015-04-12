@@ -1,9 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Main extends CI_Controller {
+	//var $passwordhere;
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('regmodel');
 	}
 	
 	public function index()
@@ -18,7 +20,7 @@ class Main extends CI_Controller {
 
 	public function display()
 	{
-		$this->load->model('regmodel');
+		
 		if($this->regmodel->get_all())
 			$data['records'] = $this->regmodel->get_all(); 
 		$this->load->view('view_content',$data);
@@ -38,6 +40,9 @@ class Main extends CI_Controller {
 		$this->form_validation->set_rules('username','Username_ID','callback_validate_credentials');
 		$this->form_validation->set_rules('mpassword','Mpassword','required|md5');
 		
+		//var $passwordhere;
+		 $passwordhere = $this->input->post('mpassword');
+		global $passwordhere;
 		if($this->form_validation->run())
 		{
 			$data = array(
@@ -45,7 +50,7 @@ class Main extends CI_Controller {
 				'is_logged_in' => 1
 				);
 			$this->session->set_userdata($data);
-			redirect('main/sthamp');
+			redirect('main/display'); //<<<<<<----- ReDIRECT PAGE
 		}
 		else{
 			echo "BEEEEEEEEEP";
@@ -58,7 +63,9 @@ class Main extends CI_Controller {
 
 	public function validate_credentials()
 	{
-		$this->load->model('regmodel');
+		
+		//$this->load->model('regmodel');
+		$this->regmodel->get_variables($passwordhere);
 		if($this->regmodel->can_log_in())
 		{
 			return true;

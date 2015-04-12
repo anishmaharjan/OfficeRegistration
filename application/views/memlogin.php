@@ -8,17 +8,17 @@
 	echo validation_errors();
 	//echo $id . "<br>";   ?>
 	
-UserID		<input type="text" name="username" placeholder="Username ID" value="<?php echo $id; ?>" >
-<br>
-Password: 	<input type="password" autofocus name="mpassword" required placeholder="Password" >
-<?php 
+	UserID		<input type="text" name="username" readonly="readonly" value="<?php echo $id; ?>" >
+	<br>
+	Password: 	<input type="password" autofocus name="mpassword" required placeholder="Password" >
+	<?php 
 	echo form_submit('login_submit','Enter'); 
 	echo form_close(); 
 
 
 
 
-?>
+	?>
 
 
 </body>
