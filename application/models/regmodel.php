@@ -1,11 +1,11 @@
 <?php
 class Regmodel extends CI_Model
 {
-	var $variable;
+	var $postpassword;
+	var $postuname;
 	
 	function __construct(){
-		parent::
-		__construct();
+		parent::__construct();
 	}
 	public function get_all()
 	{
@@ -15,8 +15,10 @@ class Regmodel extends CI_Model
 
 	public function can_log_in()
 	{
-		$this->db->where('id',$this->input->get('userid'));
-		$this->db->where('password',md5($variable));
+		global $postpassword;
+		global $postuname;
+		$this->db->where('id',$postuname); //$this->input->get('userid')
+		$this->db->where('password',md5($postpassword));
 
 		$query = $this->db->get('staffs');
 
@@ -30,9 +32,11 @@ class Regmodel extends CI_Model
 		}
 
 	}
-	public function get_variables($variable){
-		$this->variable = $variable;
+	public function get_variables($postuname, $postpassword){
+		$this->postuname = $postuname;
+		$this->postpassword = $postpassword;
 	}
+
 }
 
 ?>

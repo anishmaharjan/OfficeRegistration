@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Main extends CI_Controller {
-	//var $passwordhere;
+	var $passwordhere, $unamehere;
 	public function __construct()
 	{
 		parent::__construct();
@@ -41,8 +41,9 @@ class Main extends CI_Controller {
 		$this->form_validation->set_rules('mpassword','Mpassword','required|md5');
 		
 		//var $passwordhere;
+		 $unamehere = $this->input->post('username');
 		 $passwordhere = $this->input->post('mpassword');
-		global $passwordhere;
+		//global $passwordhere;
 		if($this->form_validation->run())
 		{
 			$data = array(
@@ -50,6 +51,7 @@ class Main extends CI_Controller {
 				'is_logged_in' => 1
 				);
 			$this->session->set_userdata($data);
+			echo "boop";
 			redirect('main/display'); //<<<<<<----- ReDIRECT PAGE
 		}
 		else{
@@ -65,7 +67,9 @@ class Main extends CI_Controller {
 	{
 		
 		//$this->load->model('regmodel');
-		$this->regmodel->get_variables($passwordhere);
+		global $unamehere;
+		global $passwordhere;
+		$this->regmodel->get_variables($unamehere,$passwordhere);
 		if($this->regmodel->can_log_in())
 		{
 			return true;
