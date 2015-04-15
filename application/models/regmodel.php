@@ -1,8 +1,6 @@
 <?php
 class Regmodel extends CI_Model
 {
-	var $postpassword;
-	var $postuname;
 	
 	function __construct(){
 		parent::__construct();
@@ -15,14 +13,13 @@ class Regmodel extends CI_Model
 
 	public function can_log_in()
 	{
-		global $postpassword;
-		global $postuname;
-		$this->db->where('id',$postuname); //$this->input->get('userid')
-		$this->db->where('password',md5($postpassword));
+		
+		$this->db->where('name',$this->input->post('username')); //$this->input->get('userid') //$postuname
+		$this->db->where('password',md5($this->input->post('mpassword'))); //$this->input->post('mpassword') //$postpassword
 
 		$query = $this->db->get('staffs');
 
-		if($query ->num_rows() ==1)
+		if($query ->num_rows() == 1)
 		{
 			return true;
 		}
@@ -32,11 +29,5 @@ class Regmodel extends CI_Model
 		}
 
 	}
-	public function get_variables($postuname, $postpassword){
-		$this->postuname = $postuname;
-		$this->postpassword = $postpassword;
-	}
-
 }
 
-?>

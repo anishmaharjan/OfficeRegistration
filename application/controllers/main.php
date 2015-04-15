@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Main extends CI_Controller {
-	var $passwordhere, $unamehere;
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -37,24 +37,22 @@ class Main extends CI_Controller {
 	{
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('username','Username_ID','callback_validate_credentials');
+		$this->form_validation->set_rules('username','Username_ID','required|callback_validate_credentials');
 		$this->form_validation->set_rules('mpassword','Mpassword','required|md5');
 		
-		//var $passwordhere;
-		 $unamehere = $this->input->post('username');
-		 $passwordhere = $this->input->post('mpassword');
-		//global $passwordhere;
+		
 		if($this->form_validation->run())
 		{
-			$data = array(
-				'userid' => $this->input->get('id'),//what to put here?
+			/*$data = array(
+				'userid' => $this->input->get('id'), //what to put here?
 				'is_logged_in' => 1
 				);
-			$this->session->set_userdata($data);
+			$this->session->set_userdata($data);*/
 			echo "boop";
 			redirect('main/display'); //<<<<<<----- ReDIRECT PAGE
 		}
 		else{
+			//redirect('main/memberlogin');
 			echo "BEEEEEEEEEP";
 			echo "<br>";
 			echo $this->input->post('username');
@@ -65,11 +63,6 @@ class Main extends CI_Controller {
 
 	public function validate_credentials()
 	{
-		
-		//$this->load->model('regmodel');
-		global $unamehere;
-		global $passwordhere;
-		$this->regmodel->get_variables($unamehere,$passwordhere);
 		if($this->regmodel->can_log_in())
 		{
 			return true;
